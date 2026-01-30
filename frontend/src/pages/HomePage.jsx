@@ -13,21 +13,18 @@ const HomePage = () => {
 
     const navigate = useNavigate();
 
-    // Get logged in user
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
     const [isRateLimited, setIsRateLimited] = useState(false);
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    /* Protect Route */
     useEffect(() => {
         if (!user) {
             navigate("/");
         }
     }, [user, navigate]);
 
-    /* Fetch Notes */
     useEffect(() => {
         if (!user?._id) return;
 
@@ -56,7 +53,6 @@ const HomePage = () => {
 
     }, [user]);
 
-    /* Logout */
     const logoutHandler = () => {
         localStorage.removeItem("userInfo");
         navigate("/");
@@ -65,14 +61,12 @@ const HomePage = () => {
     return (
         <div className="min-h-screen">
 
-            {/* Navbar */}
             <Navbar />
             {user && (
                 <div className="max-w-7xl mx-auto px-4 mt-6">
 
                     <div className="flex my-12 flex-col sm:flex-row items-center sm:justify-between gap-3 relative">
 
-                        {/* Center Welcome */}
                         <h2 className="text-lg sm:text-xl font-semibold text-base-content text-center sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2">
                             Welcome,{" "}
                             <span className="text-primary">
@@ -81,7 +75,6 @@ const HomePage = () => {
                             👋
                         </h2>
 
-                        {/* Spacer (desktop only) */}
                         <div className="hidden sm:block w-24"></div>
 
 
@@ -90,28 +83,19 @@ const HomePage = () => {
                 </div>
             )}
 
-
-            {/* Logout Button */}
-
-            {/* Rate Limit */}
             {isRateLimited && <RateLimitedUI />}
 
-            {/* Content */}
             <div className="max-w-7xl mx-auto p-4 mt-4">
 
-                {/* Loading */}
                 {loading && (
                     <div className="flex items-center justify-center py-10">
                         <Loader className="animate-spin size-10 text-primary" />
                     </div>
                 )}
 
-                {/* Empty */}
                 {notes.length === 0 && !isRateLimited && !loading && (
                     <NotesNotFound />
                 )}
-
-                {/* Notes */}
                 {notes.length > 0 && !isRateLimited && !loading && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 

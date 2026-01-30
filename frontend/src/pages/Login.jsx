@@ -30,12 +30,10 @@ function Login() {
                 password,
             });
 
-            // Save user
             localStorage.setItem("userInfo", JSON.stringify(data));
 
             setLoading(false);
 
-            // Go to notes page
             navigate("/homepage");
         } catch (err) {
             setLoading(false);
@@ -54,22 +52,18 @@ function Login() {
 
                 <div className="card-body">
 
-                    {/* Title */}
                     <h2 className="text-2xl font-bold text-center">
                         Login to ThinkBoard
                     </h2>
 
-                    {/* Error Message */}
                     {error && (
                         <div className="alert alert-error text-sm">
                             {error}
                         </div>
                     )}
 
-                    {/* Form */}
                     <form onSubmit={submitHandler} className="space-y-4">
 
-                        {/* Email */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -85,7 +79,6 @@ function Login() {
                             />
                         </div>
 
-                        {/* Password */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
@@ -110,7 +103,6 @@ function Login() {
                             </div>
                         </div>
 
-                        {/* Button */}
                         <div className="form-control mt-4">
                             <button
                                 type="submit"
@@ -123,7 +115,6 @@ function Login() {
 
                     </form>
 
-                    {/* Register Link */}
                     <p className="text-center mt-4 text-sm">
                         Don’t have an account?{" "}
                         <Link

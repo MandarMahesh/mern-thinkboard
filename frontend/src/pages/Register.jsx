@@ -33,12 +33,10 @@ function Register() {
                 password,
             });
 
-            // Save user info
             localStorage.setItem("userInfo", JSON.stringify(data));
 
             setLoading(false);
 
-            // Go to notes page
             navigate("/homepage");
         } catch (err) {
             setLoading(false);
@@ -57,22 +55,18 @@ function Register() {
 
                 <div className="card-body">
 
-                    {/* Title */}
                     <h2 className="text-2xl font-bold text-center">
                         Create Account
                     </h2>
 
-                    {/* Error Message */}
                     {error && (
                         <div className="alert alert-error text-sm">
                             {error}
                         </div>
                     )}
 
-                    {/* Form */}
                     <form onSubmit={submitHandler} className="space-y-4">
 
-                        {/* Name */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Full Name</span>
@@ -88,7 +82,6 @@ function Register() {
                             />
                         </div>
 
-                        {/* Email */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -104,7 +97,6 @@ function Register() {
                             />
                         </div>
 
-                        {/* Password */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
@@ -130,7 +122,6 @@ function Register() {
                             </div>
                         </div>
 
-                        {/* Button */}
                         <div className="form-control mt-4">
                             <button
                                 type="submit"
@@ -143,7 +134,6 @@ function Register() {
 
                     </form>
 
-                    {/* Login Link */}
                     <p className="text-center mt-4 text-sm">
                         Already have an account?{" "}
                         <Link
