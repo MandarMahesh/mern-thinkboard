@@ -13,7 +13,8 @@ const NoteDetailPage = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const res = await api.get(`/notes/${id}`);
+        const res = await api.get(`/notes/note/${id}`);
+        console.log(res);
         setNote(res.data);
       } catch (error) {
         console.log("Error In Fetching Note: ", error);
@@ -30,7 +31,7 @@ const NoteDetailPage = () => {
     try {
       await api.delete(`/notes/${id}`);
       toast.success("Note Deleted");
-      navigate("/");
+      navigate("/homepage");
     } catch (error) {
       console.log("Error Deleting The Note: ", error);
       toast.error("Failed To Delete Note");
@@ -45,7 +46,7 @@ const NoteDetailPage = () => {
     try {
       await api.put(`/notes/${id}`, note);
       toast.success("Note Updated Successfully");
-      navigate("/");
+      navigate("/homepage");
     } catch (error) {
       console.log("Error Saving The Note: ", error);
       toast.error("Failed To Update Note!");
@@ -64,7 +65,7 @@ const NoteDetailPage = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <Link to="/" className="btn btn-ghost">
+          <Link to="/homepage" className="btn btn-ghost">
             <ArrowLeftIcon className="h-5 w-5" />
             Back To Notes
           </Link>
@@ -81,7 +82,7 @@ const NoteDetailPage = () => {
               </label>
               <input
                 type="text"
-                placeholder="Note Title"
+                placeholder="Note Title..."
                 className="input input-bordered"
                 value={note.title}
                 onChange={(e) => setNote({ ...note, title: e.target.value })}

@@ -10,6 +10,7 @@ const CreatePage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
       toast.error("All Fields Are Required");
@@ -18,11 +19,12 @@ const CreatePage = () => {
     setLoading(true);
     try {
       await api.post("/notes", {
+        userId: user._id,
         title,
         content,
       });
       toast.success("Note Created Successfully!");
-      navigate("/");
+      navigate("/homepage");
     } catch (error) {
       console.log("Error Creating Note: ", error);
       if (error.response.status === 429) {

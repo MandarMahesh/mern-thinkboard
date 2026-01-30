@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
+import userRoutes from "./routes/userRoutes.js";
 //const express = require("express");
 import notesRoutes from "./routes/notesRoutes.js";
 import { connectDB } from "./config/db.js";
@@ -16,11 +17,11 @@ if (process.env.NODE_ENV !== "production") {
     }));
 }
 app.use(express.json());
-app.use(rateLimiter);
 // app.use((req, res, next) => {
 //     console.log(`Req Method Is ${req.method} & Req URL is ${req.url}`);
 //     next();
 // })
+app.use("/api/users", rateLimiter, userRoutes);
 app.use("/api/notes", notesRoutes);
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));

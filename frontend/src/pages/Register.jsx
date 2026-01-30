@@ -1,0 +1,163 @@
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import api from "../lib/axios";
+import { Eye, EyeOff, Loader } from "lucide-react";
+import { useEffect } from "react";
+
+function Register() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("userInfo"));
+        if (user) {
+            navigate("/homepage");
+        }
+    }, [navigate]);
+    const submitHandler = async (e) => {
+        e.preventDefault();
+
+        setError("");
+        setLoading(true);
+
+        try {
+            const { data } = await api.post("/users/register", {
+                name,
+                email,
+                password,
+            });
+
+            // Save user info
+            localStorage.setItem("userInfo", JSON.stringify(data));
+
+            setLoading(false);
+
+            // Go to notes page
+            navigate("/homepage");
+        } catch (err) {
+            setLoading(false);
+
+            if (err.response && err.response.data) {
+                setError(err.response.data);
+            } else {
+                setError("Registration failed. Try again.");
+            }
+        }
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-base-200">
+            <div className="card w-full max-w-md shadow-xl bg-base-100">
+
+                <div className="card-body">
+
+                    {/* Title */}
+                    <h2 className="text-2xl font-bold text-center">
+                        Create Account
+                    </h2>
+
+                    {/* Error Message */}
+                    {error && (
+                        <div className="alert alert-error text-sm">
+                            {error}
+                        </div>
+                    )}
+
+                    {/* Form */}
+                    <form onSubmit={submitHandler} className="space-y-4">
+
+                        {/* Name */}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Full Name</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="Enter your name"
+                                className="input input-bordered w-full"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        {/* Email */}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Email</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="input input-bordered w-full"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        {/* Password */}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Password</span>
+                            </label>
+
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Create password"
+                                    className="input input-bordered w-full"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    minLength={4}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Button */}
+                        <div className="form-control mt-4">
+                            <button
+                                type="submit"
+                                className={`btn btn-primary w-full `}
+                                disabled={loading}
+                            >
+                                {loading ? <Loader className="animate-spin" /> : "Register"}
+                            </button>
+                        </div>
+
+                    </form>
+
+                    {/* Login Link */}
+                    <p className="text-center mt-4 text-sm">
+                        Already have an account?{" "}
+                        <Link
+                            to="/"
+                            className="link link-primary font-semibold"
+                        >
+                            Login
+                        </Link>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Register;

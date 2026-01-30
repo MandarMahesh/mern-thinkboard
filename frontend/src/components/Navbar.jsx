@@ -1,7 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { PlusIcon } from "lucide-react";
 const Navbar = () => {
+    const navigate = useNavigate();
+    const logoutHandler = () => {
+        localStorage.removeItem("userInfo");
+        navigate("/");
+    };
+
     return (
         <header className="bg-base-300 border-b border-base-content/10">
             <div className="mx-auto max-w-6xl p-4">
@@ -12,6 +18,12 @@ const Navbar = () => {
                             <PlusIcon className="size-5" />
                             <span>New Note</span>
                         </Link>
+                        <button
+                            onClick={logoutHandler}
+                            className="btn btn-error"
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
 

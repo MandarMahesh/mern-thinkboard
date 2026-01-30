@@ -8,7 +8,6 @@ import toast from 'react-hot-toast'
 const NoteCard = ({ note, setNotes }) => {
     const handleDelete = async (e, id) => {
         e.preventDefault();
-
         if (!window.confirm("Are You Sure You Want To Delete This Note ?")) return;
         try {
             await api.delete(`/notes/${id}`);
@@ -21,7 +20,7 @@ const NoteCard = ({ note, setNotes }) => {
         }
     }
     return (
-        <Link to={`/note/${note._id}`} className="card bg-base-100 hover:shadow-lg transition-all duration-200 border-t-4 border-solid border-[#00ff9d]"
+        <Link to={`/api/notes/${note._id}`} className="card bg-base-100 hover:shadow-lg transition-all duration-200 border-t-4 border-solid border-[#00ff9d]"
         >
             <div className="card-body">
                 <h3 className="card-title text-base-content">{note.title}</h3>
