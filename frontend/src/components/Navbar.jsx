@@ -10,17 +10,17 @@ const Navbar = () => {
 
     return (
         <header className="bg-base-300 border-b border-base-content/10">
-            <div className="mx-auto max-w-6xl p-4">
-                <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold text-primary font-mono tracking-tight">ThinkBoard</h1>
-                    <div className="flex items-center gap-4">
-                        <Link to={"/create"} className="btn btn-primary">
-                            <PlusIcon className="size-5" />
-                            <span>New Note</span>
+            <div className="mx-auto max-w-6xl px-3 sm:px-4 py-3">
+                <div className="flex items-center justify-between gap-2">
+                    <h1 className="text-lg sm:text-2xl font-bold text-primary font-mono tracking-tight truncate">ThinkBoard</h1>
+                    <div className="flex items-center gap-2 shrink-0">
+                        <Link to={"/create"} className="btn btn-primary btn-xs sm:btn-sm md:btn-md">
+                            <PlusIcon className="size-4" />
+                            <span className="hidden sm:inline">New Note</span>
                         </Link>
                         <button
                             onClick={logoutHandler}
-                            className="btn btn-error"
+                            className="btn btn-error btn-xs sm:btn-sm md:btn-md"
                         >
                             Logout
                         </button>
