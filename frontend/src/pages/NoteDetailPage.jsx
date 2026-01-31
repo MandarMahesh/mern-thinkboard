@@ -10,12 +10,23 @@ const NoteDetailPage = () => {
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
   useEffect(() => {
     const fetchNote = async () => {
       try {
         const res = await api.get(`/notes/note/${id}`);
-        console.log(res);
-        setNote(res.data);
+        const fetchedNote = res.data;
+        if (fetchedNote.userId !== user._id) {
+          toast.error("Access Denied");
+          navigate("/homepage");
+          return;
+        }
+        setNote(fetchedNote);
       } catch (error) {
         console.log("Error In Fetching Note: ", error);
         toast.error("Failed To Fetch The Note!");
