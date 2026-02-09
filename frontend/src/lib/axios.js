@@ -3,4 +3,11 @@ const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5001
 const api = axios.create({
     baseURL: BASE_URL,
 });
+api.interceptors.request.use((config) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    if (user) {
+        config.headers.userId = user._id;
+    }
+    return config;
+})
 export default api;
