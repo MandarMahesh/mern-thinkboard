@@ -11,12 +11,7 @@ export async function getAllNotes(req, res) {
 };
 export async function getNoteById(req, res) {
     try {
-        console.log("Header userId:", req.headers.userid);
-        console.log("Note ID:", req.params.id);
-
         const note = await Note.findOne({ _id: req.params.id, userId: req.headers.userid });
-        console.log("DB userId stored:", note?.userId);
-
         if (!note) return res.status(404).json({ message: "Note not found" });
         res.json(note);
     } catch (error) {

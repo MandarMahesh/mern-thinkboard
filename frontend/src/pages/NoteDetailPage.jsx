@@ -18,6 +18,8 @@ const NoteDetailPage = () => {
   }, [user, navigate]);
   useEffect(() => {
     const fetchNote = async () => {
+      if (!id || !user) return;
+
       try {
         const res = await api.get(`/notes/note/${id}`);
         const fetchedNote = res.data;
@@ -35,7 +37,7 @@ const NoteDetailPage = () => {
       }
     };
     fetchNote();
-  }, [id]);
+  }, [id, user, navigate]);
   const handleDelete = async () => {
     if (!window.confirm("Are You Sure You Want To Delete This Note?")) return;
 
