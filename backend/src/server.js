@@ -24,14 +24,14 @@ app.use(express.json());
 app.use("/api/users", rateLimiter, userRoutes);
 app.use("/api/notes", notesRoutes);
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
+    const frontendPath = path.join(__dirname, "../frontend/dist");
+    app.use(express.static(frontendPath));
     app.get("*", (req, res) => {
 
         if (req.originalUrl.startsWith("/api")) {
             return res.status(404).json("API route not found!!!");
         }
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+        res.sendFile(path.join(frontendPath, "index.html"));
     });
 }
 connectDB().then(() => {
