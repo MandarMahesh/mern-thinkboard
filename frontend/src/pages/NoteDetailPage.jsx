@@ -8,14 +8,18 @@ const NoteDetailPage = () => {
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
   const { id } = useParams();
-  const user = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
-    if (!user) {
+    const storedUser = JSON.parse(localStorage.getItem("userInfo"));
+    if (storedUser) {
+      setUser(storedUser);
+    } else {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [navigate]);
   useEffect(() => {
     if (!id) return;
     if (!user) return;
