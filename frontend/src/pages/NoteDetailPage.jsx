@@ -17,12 +17,20 @@ const NoteDetailPage = () => {
     }
   }, [user, navigate]);
   useEffect(() => {
+    if (!id) return;
+    if (!user) return;
+
     const fetchNote = async () => {
-      if (!id || !user) return;
 
       try {
+        setLoading(true);
         const res = await api.get(`/notes/note/${id}`);
         const fetchedNote = res.data;
+        if (!fetchedNote || !fetchedNote._id) {
+          toast.error("Note Not Found");
+          navigate("/homepage");
+          return;
+        }
         if (fetchedNote.userId !== user._id) {
           toast.error("Access Denied");
           navigate("/homepage");
@@ -32,6 +40,7 @@ const NoteDetailPage = () => {
       } catch (error) {
         console.log("Error In Fetching Note: ", error);
         toast.error("Failed To Fetch The Note!");
+        navigate("/homepage");
       } finally {
         setLoading(false);
       }
