@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/MandarMahesh/mern-thinkboard/issues"
   },
-  "homepage": "https://github.com/MandarMahesh/mern-thinkboard#readme"
+  "homepage": "https://github.com/MandarMahesh/mern-thinkboard#readme",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.3"
+  }
 }

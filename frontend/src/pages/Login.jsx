@@ -47,7 +47,7 @@ function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-base-200">
+        <div className="min-h-screen flex items-center justify-center bg-transparent">
             <div className="card w-full max-w-md shadow-xl bg-base-100">
 
                 <div className="card-body">

@@ -11,7 +11,7 @@ export async function getAllNotes(req, res) {
 };
 export async function getNoteById(req, res) {
     try {
-        const note = await Note.findOne({ _id: req.params.id, userId: req.headers.userid });
+        const note = await Note.findOne({ _id: req.params.id, userId: req.user._id });
         if (!note) return res.status(404).json({ message: "Note not found" });
         res.json(note);
     } catch (error) {
@@ -33,9 +33,19 @@ export async function createNote(req, res) {
 export async function updateNote(req, res) {
     try {
         const { title, content } = req.body;
-        const updatedNote = await Note.findByIdAndUpdate(req.params.id, { title, content }, {
-            new: true,
-        });
+        const updatedNote = await Note.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                userId: req.user._id
+            },
+            {
+                title,
+                content
+            },
+            {
+                new: true
+            }
+        );
         if (!updatedNote) return res.status(404).json({ message: "Note not found" })
         res.status(200).json(updatedNote);
     } catch (error) {
@@ -45,7 +55,10 @@ export async function updateNote(req, res) {
 };
 export async function deleteNote(req, res) {
     try {
-        const deletedNote = await Note.findByIdAndDelete(req.params.id);
+        const deletedNote = await Note.findOneAndDelete({
+            _id: req.params.id,
+            userId: req.user._id
+        });
         if (!deletedNote) return res.status(404).json({ message: "Note not found" })
         res.status(200).json({ message: "Note deleted successfully" });
     } catch (error) {

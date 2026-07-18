@@ -30,7 +30,7 @@ const HomePage = () => {
 
         const fetchNotes = async () => {
             try {
-                const res = await api.get(`/notes/${user._id}`);
+                const res = await api.get(`/notes`);
 
                 setNotes(res.data);
                 setIsRateLimited(false);
@@ -51,7 +51,7 @@ const HomePage = () => {
 
         fetchNotes();
 
-    }, [user]);
+    }, []);
 
     const logoutHandler = () => {
         localStorage.removeItem("userInfo");
